@@ -1,6 +1,10 @@
 *.zip
 *.sh
-ckpt/
+ckpts/
 logs/
 results/
 __pycache__/
+
+datasets/kitti/
+best_kitti_preds/
+code/models/weights/

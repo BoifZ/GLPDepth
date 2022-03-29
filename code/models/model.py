@@ -61,8 +61,12 @@ class Decoder(nn.Module):
     def forward(self, x_1, x_2, x_3, x_4):
         x_4_ = self.bot_conv(x_4)
         out = self.up(x_4_)
+        print(out.shape)
+        print(x_4_.shape)
 
         x_3_ = self.skip_conv1(x_3)
+        print(out.shape)
+        print(x_3_.shape)
         out = self.fusion1(x_3_, out)
         out = self.up(out)
 

@@ -70,6 +70,7 @@ def main():
     # Training settings
     criterion_d = SiLogLoss()
     optimizer = optim.Adam(model.parameters(), args.lr)
+    args.end_iter = args.epochs*len(train_loader)
 
     global global_step
     global_step = 0
@@ -98,7 +99,19 @@ def main():
 
             for each_metric, each_results in results_dict.items():
                 writer.add_scalar(each_metric, each_results, epoch)
+            
 
+def update_lr(optimizer, iter_step, args):
+    pass
+    # if iter_step < args.warm_up_end:
+    #     learning_factor = iter_step / args.warm_up_end
+    # else:
+    #     alpha = args.learning_rate_alpha
+    #     progress = (iter_step - args.warm_up_end) / (args.end_iter - args.warm_up_end)
+    #     learning_factor = (np.cos(np.pi * progress) + 1.0) * 0.5 * (1 - alpha) + alpha
+
+    # for g in optimizer.param_groups:
+    #     g['lr'] = args.lr * learning_factor
 
 def train(train_loader, model, criterion_d, optimizer, device, epoch, args):    
     global global_step
@@ -106,6 +119,7 @@ def train(train_loader, model, criterion_d, optimizer, device, epoch, args):
     depth_loss = logging.AverageMeter()
     half_epoch = args.epochs // 2
 
+    iter_step = len(train_loader)*epoch
     for batch_idx, batch in enumerate(train_loader):      
         global_step += 1
 
@@ -132,6 +146,11 @@ def train(train_loader, model, criterion_d, optimizer, device, epoch, args):
                             ('Depth Loss: %.4f (%.4f)' %
                             (depth_loss.val, depth_loss.avg)))
         optimizer.step()
+
+        update_lr(optimizer, iter_step, args)
+        iter_step += 1
+        if iter_step%100 == 0:
+            print('learning_rate: %.6f'%optimizer.state_dict()['param_groups'][0]['lr'])
 
     return loss_d
 
