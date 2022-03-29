@@ -4,3 +4,4 @@ ckpt/
 logs/
 results/
 __pycache__/
+.datasets/kitti/
