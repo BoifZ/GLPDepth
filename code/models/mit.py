@@ -438,9 +438,9 @@ class mit_b5(MixVisionTransformer):
 class mit_bb(MixVisionTransformer):
     def __init__(self, **kwargs):
         super(mit_bb, self).__init__(
-            patch_size=4, embed_dims=[8, 16, 40, 64], num_heads=[1, 2, 2, 4], mlp_ratios=[8, 8, 8, 8],
+            patch_size=4, embed_dims=[8, 16, 40, 64], num_heads=[1, 2, 2, 4], mlp_ratios=[4, 4, 4, 4],
             qkv_bias=True, norm_layer=partial(nn.LayerNorm, eps=1e-6), depths=[2, 2, 2, 2], sr_ratios=[8, 4, 2, 1],
-            drop_rate=0.0, drop_path_rate=0.1, strides = [8, 1, 1, 1])
+            drop_rate=0.0, drop_path_rate=0.1, strides = [4, 2, 1, 1])
 
 
 if __name__ == "__main__":
