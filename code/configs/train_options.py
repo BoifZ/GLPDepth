@@ -20,7 +20,7 @@ class TrainOptions(BaseOptions):
         
         parser.add_argument('--warm_up_end',            type=int,   default=100)
         parser.add_argument('--learning_rate_alpha',    type=float,   default=0.05)
-sse+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+
         return parser
 
 # test-eval

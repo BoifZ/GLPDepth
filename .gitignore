@@ -4,6 +4,7 @@ ckpts/
 logs/
 results/
 __pycache__/
+.vscode/
 
 datasets/kitti/
 best_kitti_preds/

@@ -25,18 +25,18 @@ class kitti(BaseDataset):
         filenames_list = self.readTXT(txt_path)
         self.filenames_list = []
         
-        # for f in filenames_list:
-        #     if os.path.exists(self.data_path+f.split(' ')[0]):
-        #         self.filenames_list.append(f)
-
-        for custom_data 
-        from glob import glob
-        self.data_path = '/home/boif/Desktop/NeuS/data/mid_close/preprocessed'
-        pre = len(self.data_path)
-        filenames_list = sorted(glob(os.path.join(self.data_path, 'image/*.png')))
         for f in filenames_list:
-            f = f[pre:]
-            self.filenames_list.append(f+' '+f.replace('image', 'depth'))
+            if os.path.exists(self.data_path+f.split(' ')[0]):
+                self.filenames_list.append(f)
+
+        ## for custom_data 
+        # from glob import glob
+        # self.data_path = '/home/boif/Desktop/NeuS/data/mid_close/preprocessed'
+        # pre = len(self.data_path)
+        # filenames_list = sorted(glob(os.path.join(self.data_path, 'image/*.png')))
+        # for f in filenames_list:
+        #     f = f[pre:]
+        #     self.filenames_list.append(f+' '+f.replace('image', 'depth'))
         
         # print(self.filenames_list)
         phase = 'train' if is_train else 'test'

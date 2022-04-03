@@ -2,14 +2,21 @@ import torch
 import torch.nn as nn
 
 from mmcv.runner import load_checkpoint
-from models.mit import mit_b4
+from models.mit import mit_b4, mit_bb
 
 class GLPDepth(nn.Module):
     def __init__(self, max_depth=10.0, is_train=False):
         super().__init__()
         self.max_depth = max_depth
 
-        self.encoder = mit_b4()
+        # self.encoder = mit_b4()
+        # channels_in = [512, 320, 128]
+        # channels_out = 64
+
+        self.encoder = mit_bb()
+        channels_in = [64, 40, 16]
+        channels_out = 8
+
         if is_train:            
             ckpt_path = './code/models/weights/mit_b4.pth'
             try:
@@ -22,8 +29,6 @@ class GLPDepth(nn.Module):
                 output = './code/models/weights/mit_b4.pth'
                 gdown.download(url, output, quiet=False)
 
-        channels_in = [512, 320, 128]
-        channels_out = 64
             
         self.decoder = Decoder(channels_in, channels_out)
     
@@ -71,6 +76,8 @@ class Decoder(nn.Module):
         out = self.up(out)
 
         x_2_ = self.skip_conv2(x_2)
+        print(out.shape)
+        print(x_2_.shape)
         out = self.fusion2(x_2_, out)
         out = self.up(out)
 
